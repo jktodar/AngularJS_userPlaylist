@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='MusicApp'>
+<head>
+	<meta charset="UTF-8">
+	<title>Lesson 5</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/cssResetter.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+	
+</head>
+<body ng-controller='MusicController as ctrl'>
+	
+	<div class="container">
+		<span><h5>Name: </h5></span>
+		<label><input ng-model='ctrl.newUser.tmpUser.name' placeholder='enter name'/></label><br>
+		
+		<span><h5>Age: </h5></span>
+		<label><input type='number' min='0' ng-change='ctrl.checkAge(ctrl.newUser.tmpUser.age)' ng-model='ctrl.newUser.tmpUser.age' /></label>
+
+		<span><h4>Genre: </h4></span>
+
+		<label>Pop hits  <input type='radio' name='genre' 
+			ng-value="ctrl.genresObj.pop" 
+			ng-model='ctrl.userSelection'/>
+		</label>
+
+		<label>Rock hits  <input type='radio' name='genre' 
+			ng-value="ctrl.genresObj.rock" 
+			ng-model='ctrl.userSelection'/>
+		</label>
+
+		<label>Rap hits  <input type='radio' name='genre' 
+			ng-value="ctrl.genresObj.rap" 
+			ng-model='ctrl.userSelection'/>
+		</label>
+		<!-- <span ng-bind='ctrl.music.userSelection'></span> -->
+
+		<div>
+			<ul>
+				<li ng-repeat='song in ctrl.userSelection'>
+						<input type='checkbox' ng-show='song' ng-checked='song.checked' 
+							ng-model='song.checked' ng-click='ctrl.updateSong($event,song)' > <span ng-bind='song.name'></span></input>
+					
+				</li>
+
+				 <span ng-bind="ctrl.music.songSelection"></span>
+				
+			</ul>
+			
+		</div>
+
+			<span><h4>Allow explicit? </h4></span>
+
+		<label>Clean<input type='radio' name='explicit' 
+			ng-value='ctrl.music.explicitValue.isFalse' 
+			ng-model='ctrl.userTypeSelect '/>
+		</label>
+
+		<label>Explicit<input type='radio' name='explicit' ng-disabled='ctrl.isDisabled'
+			ng-value='ctrl.music.explicitValue.isTrue' 
+			ng-model='ctrl.userTypeSelect'/>
+		</label>
+
+
+		<button type='submit' 
+		ng-click="ctrl.callSubmit(ctrl.tempSongsArray, ctrl.userTypeSelect, ctrl.newUser.tmpUser.name, ctrl.newUser.tmpUser.age)">Submit Selection</button>
+
+		<div ng-show='ctrl.showUserInfo'>
+		<span>{{ ctrl.newUser.user.name }}'s Playlist</span>
+			<ul>
+				<li ng-repeat='song in ctrl.newUser.user.playlist'>
+					{{ song.name }} - {{ song.artist }} - {{ song.type }}
+
+				</li>
+			</ul>
+		</div>
+
+
+
+
+
+	</div><!--  End Container div -->
+	<script src='js/angular.min.js'></script>
+	<script src='js/app.js'></script>
+	<script src='js/factories.js'></script>
+	<script src='js/services.js'></script>
+</body>
+</html>
